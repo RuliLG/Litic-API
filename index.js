@@ -24,8 +24,8 @@ app.post('/invoke', async (req, res) => {
     const litic = new Litic(url, { keyword })
     try {
         await litic.test()
-    } catch {
-        return res.status(500).send({ error: 'Could not finish analysis' })
+    } catch (error) {
+        return res.status(500).send({ error: 'Could not finish analysis', meta: error })
     }
 
     if (litic.didFail()) {
