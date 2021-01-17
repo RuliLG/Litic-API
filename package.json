@@ -10,6 +10,6 @@
   "license": "ISC",
   "dependencies": {
     "express": "^4.17.1",
-    "litic": "^0.1.7"
+    "litic": "^0.1.8"
   }
 }
