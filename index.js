@@ -18,13 +18,18 @@ const isValidUrl = (url) => {
 app.post('/invoke', async (req, res) => {
     const { url, keyword } = req.body
     if (!isValidUrl(url)) {
-        return res.send({ error: 'Invalid URL' })
+        return res.sendStatus(422).send({ error: 'Invalid URL' })
     }
 
     const litic = new Litic(url, { keyword })
-    await litic.test()
+    try {
+        await litic.test()
+    } catch {
+        return res.sendStatus(500).send({ error: 'Could not finish analysis' })
+    }
+
     if (litic.didFail()) {
-        return res.send({ error: 'Could not finish analysis' })
+        return res.sendStatus(500).send({ error: 'Could not finish analysis' })
     }
 
     res.send({
