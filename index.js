@@ -25,7 +25,7 @@ app.post('/invoke', async (req, res) => {
     return litic.test()
         .then(() => {
             if (litic.didFail()) {
-                return res.status(500).send({ error: 'Could not finish analysis' })
+                // return res.status(500).send({ error: 'Could not finish analysis' })
             }
 
             res.send({
