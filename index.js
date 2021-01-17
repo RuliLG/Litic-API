@@ -33,7 +33,7 @@ app.post('/invoke', async (req, res) => {
             })
         })
         .catch(error => {
-            res.status(500).send({ error: 'Could not finish analysis', meta: error.message })
+            res.status(500).send({ error: 'Could not finish analysis', meta: error })
         })
 })
 
