@@ -22,19 +22,19 @@ app.post('/invoke', async (req, res) => {
     }
 
     const litic = new Litic(url, { keyword })
-    try {
-        await litic.test()
-    } catch (error) {
-        return res.status(500).send({ error: 'Could not finish analysis', meta: error })
-    }
+    litic.test()
+        .then(() => {
+            if (litic.didFail()) {
+                return res.status(500).send({ error: 'Could not finish analysis' })
+            }
 
-    if (litic.didFail()) {
-        return res.status(500).send({ error: 'Could not finish analysis' })
-    }
-
-    res.send({
-        results: litic.getResults()
-    })
+            res.send({
+                results: litic.getResults()
+            })
+        })
+        .catch(error => {
+            res.status(500).send({ error: 'Could not finish analysis', meta: error })
+        })
 })
 
 app.listen(port, () => {
